@@ -33,31 +33,28 @@ ENV FEATURES="parallel-fetch parallel-install splitdebug -news"
 
 RUN set -eux; \
     mkdir -p /etc/portage /etc/portage/repos.conf; \
-  mkdir -p /etc/portage/package.accept_keywords; \
+    mkdir -p /etc/portage/package.accept_keywords; \
     touch /etc/portage/make.conf; \
     if [[ ! -f /etc/portage/repos.conf/gentoo.conf && -f /usr/share/portage/config/repos.conf ]]; then \
       cp /usr/share/portage/config/repos.conf /etc/portage/repos.conf/gentoo.conf; \
     fi; \
     jobs="$(nproc)"; \
     if [[ "${jobs}" -lt 1 ]]; then jobs=1; fi; \
-    sed -i "/^COMMON_FLAGS=/d" /etc/portage/make.conf; \
-    sed -i "/^CFLAGS=/d" /etc/portage/make.conf; \
-    sed -i "/^CXXFLAGS=/d" /etc/portage/make.conf; \
-    sed -i "/^LDFLAGS=/d" /etc/portage/make.conf; \
-    sed -i "/^FEATURES=/d" /etc/portage/make.conf; \
-    sed -i "/^MAKEOPTS=/d" /etc/portage/make.conf; \
-    sed -i "/^EMERGE_DEFAULT_OPTS=/d" /etc/portage/make.conf; \
-    { \
-      echo "COMMON_FLAGS=\"${GENTOO_CFLAGS}\""; \
-      echo "CFLAGS=\"${GENTOO_CFLAGS}\""; \
-      echo "CXXFLAGS=\"${GENTOO_CXXFLAGS}\""; \
-      echo "LDFLAGS=\"${GENTOO_LDFLAGS}\""; \
-      echo "FEATURES=\"${FEATURES}\""; \
-      echo "MAKEOPTS=\"-j${jobs}\""; \
-      echo "EMERGE_DEFAULT_OPTS=\"--quiet-build=y --jobs=${jobs} --load-average=${jobs}\""; \
-    } >> /etc/portage/make.conf; \
+    cat > /etc/portage/make.conf <<EOF
+COMMON_FLAGS="${GENTOO_CFLAGS}"
+CFLAGS="${GENTOO_CFLAGS}"
+CXXFLAGS="${GENTOO_CXXFLAGS}"
+LDFLAGS="${GENTOO_LDFLAGS}"
+FEATURES="${FEATURES}"
+MAKEOPTS="-j${jobs}"
+EMERGE_DEFAULT_OPTS="--quiet-build=y --jobs=${jobs} --load-average=${jobs}"
+EOF
+
+RUN set -eux; \
     emerge --sync || emerge-webrsync; \
-    emerge --oneshot app-misc/ca-certificates dev-vcs/git app-eselect/eselect-repository; \
+  emerge --oneshot app-misc/ca-certificates dev-vcs/git app-eselect/eselect-repository
+
+RUN set -eux; \
     if ! eselect repository list -i | grep -qE '^[[:space:]]*guru[[:space:]]'; then \
       eselect repository enable guru; \
     fi; \
@@ -65,7 +62,9 @@ RUN set -eux; \
     if ! emerge --oneshot app-emulation/gcompat; then \
       echo "app-emulation/gcompat ~amd64" > /etc/portage/package.accept_keywords/gcompat; \
       emerge --oneshot app-emulation/gcompat::guru; \
-    fi; \
+    fi
+
+RUN set -eux; \
     emerge --oneshot app-shells/bash \
       app-arch/tar \
       dev-db/sqlite \
