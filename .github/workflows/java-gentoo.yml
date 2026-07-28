@@ -27,11 +27,11 @@ jobs:
       matrix:
         include:
           - variant: corretto
-            upstream_image: amazoncorretto:21-alpine
+            upstream_image: amazoncorretto:25-alpine
             image_tag: java_gentoo_corretto
             requires_oracle_auth: false
           - variant: zulu
-            upstream_image: azul/zulu-openjdk-alpine:21-jre-headless
+            upstream_image: azul/zulu-openjdk-alpine:25-jre-headless
             image_tag: java_gentoo_zulu
             requires_oracle_auth: false
 
