@@ -13,9 +13,10 @@ ENV CPPFLAGS="-O3 -march=native -flto"
 ENV CC="gcc"
 ENV CXX="g++"
 
-RUN mkdir -p /opt/src && cd /opt/src && \
-    wget -qO- https://download.java.net/openjdk/jdk25/ri/openjdk-jdk25-linux-x64-musl.tar.gz | tar -xz && \
-    mv jdk-25* /opt/java/openjdk
+RUN mkdir -p /opt/src /opt/java && cd /opt/src && \
+    wget -qO /tmp/openjdk25.tar.gz https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.1%2B9/OpenJDK25U-jdk_x64_alpine-linux-musl_25.0.1_9.tar.gz && \
+    tar -xzf /tmp/openjdk25.tar.gz -C /opt/java && \
+    mv /opt/java/jdk-25* /opt/java/openjdk
 
 ENV JAVA_HOME=/opt/java/openjdk
 ENV PATH="${JAVA_HOME}/bin:${PATH}"

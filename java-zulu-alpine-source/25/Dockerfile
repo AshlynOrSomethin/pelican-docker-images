@@ -13,9 +13,10 @@ ENV CPPFLAGS="-O3 -march=native -flto"
 ENV CC="gcc"
 ENV CXX="g++"
 
-RUN mkdir -p /opt/src && cd /opt/src && \
-    wget -qO- https://cdn.azul.com/zulu/bin/zulu25.30.13-ca-jdk25.0.0-linux_musl_x64.tar.gz | tar -xz && \
-    mv zulu25* /opt/java/openjdk
+RUN mkdir -p /opt/src /opt/java && cd /opt/src && \
+    wget -qO /tmp/zulu25.tar.gz https://cdn.azul.com/zulu/bin/zulu25.30.13-ca-jdk25.0.0-linux_musl_x64.tar.gz && \
+    tar -xzf /tmp/zulu25.tar.gz -C /opt/java && \
+    mv /opt/java/zulu25* /opt/java/openjdk
 
 ENV JAVA_HOME=/opt/java/openjdk
 ENV PATH="${JAVA_HOME}/bin:${PATH}"
