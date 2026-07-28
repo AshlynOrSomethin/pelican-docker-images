@@ -21,7 +21,7 @@ concurrency:
 jobs:
   build_and_push:
     name: "java_${{ matrix.tag }}_corretto"
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64]
     env:
       DOCKER_CLIENT_TIMEOUT: 120
       COMPOSE_HTTP_TIMEOUT: 120
