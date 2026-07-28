@@ -14,7 +14,7 @@ ENV CC="gcc"
 ENV CXX="g++"
 
 RUN mkdir -p /opt/src /opt/java && cd /opt/src && \
-    wget -qO /tmp/zulu25.tar.gz https://cdn.azul.com/zulu/bin/zulu25.30.13-ca-jdk25.0.0-linux_musl_x64.tar.gz && \
+    wget -qO /tmp/zulu25.tar.gz https://cdn.azul.com/zulu/bin/zulu25.36.15-ca-jdk25.0.4-linux_musl_x64.tar.gz && \
     tar -xzf /tmp/zulu25.tar.gz -C /opt/java && \
     mv /opt/java/zulu25* /opt/java/openjdk
 
