@@ -2,27 +2,25 @@ ARG UPSTREAM_IMAGE=eclipse-temurin:21-jdk
 
 FROM ${UPSTREAM_IMAGE} AS java-upstream
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
 RUN set -eux; \
-    if [[ -n "${JAVA_HOME:-}" && -d "${JAVA_HOME}" ]]; then \
+    if [ -n "${JAVA_HOME:-}" ] && [ -d "${JAVA_HOME}" ]; then \
       src_java="${JAVA_HOME}"; \
     else \
-      java_bin="$(readlink -f "$(command -v java)")"; \
+      java_bin="$(command -v java)"; \
       src_java="$(dirname "$(dirname "${java_bin}")")"; \
     fi; \
     src_java="$(readlink -f "${src_java}")"; \
-    test -d "${src_java}"; \
+    [ -d "${src_java}" ]; \
     mkdir -p /opt/java-export/java; \
     cp -a "${src_java}/." /opt/java-export/java/
 
-FROM gentoo/stage3
+FROM gentoo/stage3:musl-llvm
 
 LABEL author="AshlynOrSomethin" maintainer="admin@softwarenoob.com"
 LABEL org.opencontainers.image.source="https://github.com/AshlynOrSomethin/pelican-docker-images"
 LABEL org.opencontainers.image.licenses="MIT"
-LABEL org.opencontainers.image.base.name="gentoo/stage3"
-LABEL org.opencontainers.image.base.stage3="https://distfiles.gentoo.org/releases/amd64/autobuilds/current-stage3-amd64/"
+LABEL org.opencontainers.image.base.name="gentoo/stage3:musl-llvm"
+LABEL org.opencontainers.image.base.stage3="https://distfiles.gentoo.org/releases/amd64/autobuilds/current-stage3-amd64-musl-llvm/"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 

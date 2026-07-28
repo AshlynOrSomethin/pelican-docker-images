@@ -27,48 +27,12 @@ jobs:
       matrix:
         include:
           - variant: corretto
-            upstream_image: amazoncorretto:21
+            upstream_image: amazoncorretto:21-alpine
             image_tag: java_gentoo_corretto
             requires_oracle_auth: false
           - variant: zulu
-            upstream_image: azul/zulu-openjdk:21
+            upstream_image: azul/zulu-openjdk-alpine:21-jre-headless
             image_tag: java_gentoo_zulu
-            requires_oracle_auth: false
-          - variant: openjdk
-            upstream_image: openjdk:21-jdk
-            image_tag: java_gentoo_openjdk
-            requires_oracle_auth: false
-          - variant: openjre
-            upstream_image: eclipse-temurin:21-jre
-            image_tag: java_gentoo_openjre
-            requires_oracle_auth: false
-          - variant: openjfx
-            upstream_image: bellsoft/liberica-openjfx-debian:21
-            image_tag: java_gentoo_openjfx
-            requires_oracle_auth: false
-          - variant: temurin
-            upstream_image: eclipse-temurin:21-jdk
-            image_tag: java_gentoo_temurin
-            requires_oracle_auth: false
-          - variant: openj9
-            upstream_image: ibm-semeru-runtimes:open-21-jdk
-            image_tag: java_gentoo_openj9
-            requires_oracle_auth: false
-          - variant: ibm-j9
-            upstream_image: ibm-semeru-runtimes:open-21-jdk
-            image_tag: java_gentoo_ibm_j9
-            requires_oracle_auth: false
-          - variant: ibm-certified
-            upstream_image: ibm-semeru-runtimes:ibm-21-jdk
-            image_tag: java_gentoo_ibm_certified
-            requires_oracle_auth: false
-          - variant: liberica
-            upstream_image: bellsoft/liberica-openjdk-debian:21
-            image_tag: java_gentoo_liberica
-            requires_oracle_auth: false
-          - variant: microsoft-openjdk
-            upstream_image: mcr.microsoft.com/openjdk/jdk:21-ubuntu
-            image_tag: java_gentoo_microsoft_openjdk
             requires_oracle_auth: false
 
     steps:
