@@ -78,10 +78,16 @@ RUN set -eux; \
       eselect repository enable guru; \
     fi; \
     emaint sync -r guru; \
-    if ! emerge --oneshot sys-libs/gcompat; then \
-      echo "sys-libs/gcompat ~amd64" > /etc/portage/package.accept_keywords/gcompat; \
-      emerge --oneshot sys-libs/gcompat::guru; \
-    fi
+    mkdir -p /etc/portage/package.accept_keywords /etc/portage/package.unmask; \
+    cat > /etc/portage/package.accept_keywords/guru-gcompat <<'EOF'
+sys-libs/libucontext::guru ~amd64
+sys-libs/gcompat::guru ~amd64
+EOF
+    cat > /etc/portage/package.unmask/guru-gcompat <<'EOF'
+sys-libs/libucontext::guru
+sys-libs/gcompat::guru
+EOF
+    emerge --oneshot sys-libs/libucontext::guru sys-libs/gcompat::guru
 
 RUN set -eux; \
     emerge --oneshot app-shells/bash \
