@@ -69,6 +69,8 @@ RUN set -eux; \
     else \
       printf '\nsync-uri = https://github.com/gentoo-mirror/gentoo.git\n' >> /etc/portage/repos.conf/gentoo.conf; \
     fi; \
+    rm -rf /var/db/repos/gentoo; \
+    mkdir -p /var/db/repos/gentoo; \
     emerge --sync
 
 RUN set -eux; \
