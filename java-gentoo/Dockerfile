@@ -105,7 +105,6 @@ RUN set -eux; \
     emerge --oneshot app-shells/bash \
       app-arch/tar \
       dev-db/sqlite \
-      dev-db/sqlitebrowser \
       dev-libs/openssl \
       dev-vcs/git \
       media-libs/fontconfig \
