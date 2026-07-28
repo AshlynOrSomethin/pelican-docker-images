@@ -79,9 +79,9 @@ RUN set -eux; \
     fi; \
     emaint sync -r guru; \
     mkdir -p /etc/portage/package.accept_keywords /etc/portage/package.unmask; \
-  printf '%s\n' 'sys-libs/libucontext::guru ~amd64' 'sys-libs/gcompat::guru ~amd64' > /etc/portage/package.accept_keywords/guru-gcompat; \
-  printf '%s\n' 'sys-libs/libucontext::guru' 'sys-libs/gcompat::guru' > /etc/portage/package.unmask/guru-gcompat; \
-    emerge --oneshot sys-libs/libucontext::guru sys-libs/gcompat::guru
+    printf '%s\n' 'sys-libs/libucontext ~amd64' 'sys-libs/gcompat::guru ~amd64' > /etc/portage/package.accept_keywords/guru-gcompat; \
+    printf '%s\n' 'sys-libs/libucontext' 'sys-libs/gcompat::guru' > /etc/portage/package.unmask/guru-gcompat; \
+    emerge --oneshot sys-libs/libucontext sys-libs/gcompat::guru
 
 RUN set -eux; \
     emerge --oneshot app-shells/bash \

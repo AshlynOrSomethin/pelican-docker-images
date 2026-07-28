@@ -33,7 +33,7 @@ jobs:
             image_tag: java_gentoo_zulu
             requires_oracle_auth: false
           - variant: openjdk
-            upstream_image: openjdk:21-jdk-slim
+            upstream_image: openjdk:21-jdk
             image_tag: java_gentoo_openjdk
             requires_oracle_auth: false
           - variant: openjre
