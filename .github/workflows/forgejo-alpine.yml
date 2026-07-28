@@ -4,10 +4,6 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "0 17 1,15 * *"
-  push:
-    branches: [main]
-    paths:
-      - forgejo/**
 
 permissions:
   contents: read
