@@ -33,6 +33,7 @@ ENV FEATURES="parallel-fetch parallel-install splitdebug -news"
 
 RUN set -eux; \
     mkdir -p /etc/portage /etc/portage/repos.conf; \
+  mkdir -p /etc/portage/package.accept_keywords; \
     touch /etc/portage/make.conf; \
     if [[ ! -f /etc/portage/repos.conf/gentoo.conf && -f /usr/share/portage/config/repos.conf ]]; then \
       cp /usr/share/portage/config/repos.conf /etc/portage/repos.conf/gentoo.conf; \
@@ -56,15 +57,17 @@ RUN set -eux; \
       echo "EMERGE_DEFAULT_OPTS=\"--quiet-build=y --jobs=${jobs} --load-average=${jobs}\""; \
     } >> /etc/portage/make.conf; \
     emerge --sync || emerge-webrsync; \
-    emerge --oneshot app-eselect/eselect-repository; \
+    emerge --oneshot app-misc/ca-certificates dev-vcs/git app-eselect/eselect-repository; \
     if ! eselect repository list -i | grep -qE '^[[:space:]]*guru[[:space:]]'; then \
       eselect repository enable guru; \
     fi; \
     emaint sync -r guru; \
+    if ! emerge --oneshot app-emulation/gcompat; then \
+      echo "app-emulation/gcompat ~amd64" > /etc/portage/package.accept_keywords/gcompat; \
+      emerge --oneshot app-emulation/gcompat::guru; \
+    fi; \
     emerge --oneshot app-shells/bash \
       app-arch/tar \
-      app-misc/ca-certificates \
-      app-emulation/gcompat \
       dev-db/sqlite \
       dev-libs/openssl \
       dev-vcs/git \
