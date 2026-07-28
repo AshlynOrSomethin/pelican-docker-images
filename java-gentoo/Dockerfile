@@ -24,9 +24,13 @@ LABEL org.opencontainers.image.base.stage3="https://distfiles.gentoo.org/release
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-ARG GENTOO_CFLAGS="-O2 -pipe"
-ARG GENTOO_CXXFLAGS="-O2 -pipe"
+ARG GENTOO_CFLAGS="-march=native -O2 -pipe"
+ARG GENTOO_CXXFLAGS="-march=native -O2 -pipe"
+ARG GENTOO_FCFLAGS="-march=native -O2 -pipe"
+ARG GENTOO_FFLAGS="-march=native -O2 -pipe"
+ARG GENTOO_RUSTFLAGS="-C target-cpu=native"
 ARG GENTOO_LDFLAGS="-Wl,-O1 -Wl,--as-needed"
+ARG GENTOO_LTO=""
 
 ENV FEATURES="parallel-fetch parallel-install splitdebug -news"
 
@@ -38,22 +42,32 @@ RUN set -eux; \
       cp /usr/share/portage/config/repos.conf /etc/portage/repos.conf/gentoo.conf; \
     fi; \
     jobs="$(nproc)"; \
-    if [[ "${jobs}" -gt 2 ]]; then jobs=2; fi; \
+    if [[ "${jobs}" -gt 31 ]]; then jobs=31; fi; \
     if [[ "${jobs}" -lt 1 ]]; then jobs=1; fi; \
+    lto_flags="${GENTOO_LTO}"; \
+    if [[ -n "${lto_flags}" ]]; then \
+      lto_flags="${lto_flags} -flto"; \
+    fi; \
     cat > /etc/portage/make.conf <<EOF
 COMMON_FLAGS="${GENTOO_CFLAGS}"
-CFLAGS="${GENTOO_CFLAGS}"
-CXXFLAGS="${GENTOO_CXXFLAGS}"
-LDFLAGS="${GENTOO_LDFLAGS}"
+CFLAGS="${GENTOO_CFLAGS}${lto_flags}"
+CXXFLAGS="${GENTOO_CXXFLAGS}${lto_flags}"
+FCFLAGS="${GENTOO_FCFLAGS}"
+FFLAGS="${GENTOO_FFLAGS}"
+RUSTFLAGS="${GENTOO_RUSTFLAGS}"
+LDFLAGS="${GENTOO_LDFLAGS}${lto_flags}"
 FEATURES="${FEATURES}"
-MAKEOPTS="-j${jobs}"
+MAKEOPTS="-j${jobs} -l${jobs}"
 EMERGE_DEFAULT_OPTS="--quiet-build=y --jobs=${jobs} --load-average=${jobs}"
 EOF
 
 RUN set -eux; \
     emerge-webrsync; \
-  CFLAGS="-O2 -pipe" \
-  CXXFLAGS="-O2 -pipe" \
+  CFLAGS="-march=native -O2 -pipe" \
+  CXXFLAGS="-march=native -O2 -pipe" \
+  FCFLAGS="-march=native -O2 -pipe" \
+  FFLAGS="-march=native -O2 -pipe" \
+  RUSTFLAGS="-C target-cpu=native" \
   LDFLAGS="-Wl,-O1 -Wl,--as-needed" \
   emerge --oneshot app-misc/ca-certificates dev-vcs/git app-eselect/eselect-repository
 
