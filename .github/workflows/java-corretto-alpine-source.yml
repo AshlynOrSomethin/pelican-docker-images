@@ -20,7 +20,6 @@ jobs:
       fail-fast: false
       matrix:
         tag:
-          - 21
           - 25
     steps:
       - name: Git checkout for repository workspace
