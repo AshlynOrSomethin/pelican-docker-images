@@ -13,7 +13,6 @@ ENV         LDFLAGS="-Wl,-O1 -Wl,--as-needed -flto"
 ENV         CPPFLAGS="-O3 -march=native -flto"
 ENV         CC="gcc"
 ENV         CXX="g++"
-ENV         JAVA_TOOL_OPTIONS="-XX:+UseLTO"
 ENV         LC_ALL=en_US.UTF-8
 ENV         LANG=en_US.UTF-8
 ENV         LANGUAGE=en_US.UTF-8
