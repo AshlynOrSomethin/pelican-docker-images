@@ -73,9 +73,6 @@ jobs:
       - name: Git checkout for repository workspace
         uses: actions/checkout@v4
 
-      - name: Setup QEMU for multiarch builds
-        uses: docker/setup-qemu-action@v3
-
       - name: Setup Docker buildx
         uses: docker/setup-buildx-action@v3
         with:
@@ -93,7 +90,6 @@ jobs:
         with:
           context: ./java-gentoo
           file: ./java-gentoo/Dockerfile
-          platforms: linux/amd64
           build-args: |
             UPSTREAM_IMAGE=${{ matrix.upstream_image }}
           push: true
