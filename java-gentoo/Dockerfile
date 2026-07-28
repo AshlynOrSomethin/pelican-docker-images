@@ -15,13 +15,13 @@ RUN set -eux; \
     mkdir -p /opt/java-export; \
     cp -a "${src_java}" /opt/java-export/java
 
-FROM gentoo/stage3:llvm
+FROM gentoo/stage3:musl-llvm
 
 LABEL author="AshlynOrSomethin" maintainer="admin@softwarenoob.com"
 LABEL org.opencontainers.image.source="https://github.com/AshlynOrSomethin/pelican-docker-images"
 LABEL org.opencontainers.image.licenses="MIT"
-LABEL org.opencontainers.image.base.name="gentoo/stage3:llvm"
-LABEL org.opencontainers.image.base.stage3="https://distfiles.gentoo.org/releases/amd64/autobuilds/current-stage3-amd64-llvm-openrc/stage3-amd64-llvm-openrc-20260726T160854Z.tar.xz"
+LABEL org.opencontainers.image.base.name="gentoo/stage3:musl-llvm"
+LABEL org.opencontainers.image.base.stage3="https://distfiles.gentoo.org/releases/amd64/autobuilds/current-stage3-amd64-musl-llvm/"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -56,9 +56,15 @@ RUN set -eux; \
       echo "EMERGE_DEFAULT_OPTS=\"--quiet-build=y --jobs=${jobs} --load-average=${jobs}\""; \
     } >> /etc/portage/make.conf; \
     emerge --sync || emerge-webrsync; \
+    emerge --oneshot app-eselect/eselect-repository; \
+    if ! eselect repository list -i | grep -qE '^[[:space:]]*guru[[:space:]]'; then \
+      eselect repository enable guru; \
+    fi; \
+    emaint sync -r guru; \
     emerge --oneshot app-shells/bash \
       app-arch/tar \
       app-misc/ca-certificates \
+      app-emulation/gcompat \
       dev-db/sqlite \
       dev-libs/openssl \
       dev-vcs/git \
