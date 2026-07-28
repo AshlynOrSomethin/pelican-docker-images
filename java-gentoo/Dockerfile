@@ -39,6 +39,11 @@ RUN set -eux; \
     if [[ ! -f /etc/portage/repos.conf/gentoo.conf && -f /usr/share/portage/config/repos.conf ]]; then \
       cp /usr/share/portage/config/repos.conf /etc/portage/repos.conf/gentoo.conf; \
     fi; \
+    if grep -q '^sync-uri[[:space:]]*=' /etc/portage/repos.conf/gentoo.conf; then \
+      sed -i 's|^sync-uri[[:space:]]*=.*|sync-uri = rsync://rsync.us.gentoo.org/gentoo-portage|' /etc/portage/repos.conf/gentoo.conf; \
+    else \
+      printf '\nsync-uri = rsync://rsync.us.gentoo.org/gentoo-portage\n' >> /etc/portage/repos.conf/gentoo.conf; \
+    fi; \
     jobs="$(nproc)"; \
     if [[ "${jobs}" -lt 1 ]]; then jobs=1; fi; \
     cat > /etc/portage/make.conf <<EOF
