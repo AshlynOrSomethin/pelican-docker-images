@@ -39,10 +39,15 @@ RUN set -eux; \
     if [[ ! -f /etc/portage/repos.conf/gentoo.conf && -f /usr/share/portage/config/repos.conf ]]; then \
       cp /usr/share/portage/config/repos.conf /etc/portage/repos.conf/gentoo.conf; \
     fi; \
-    if grep -q '^sync-uri[[:space:]]*=' /etc/portage/repos.conf/gentoo.conf; then \
-      sed -i 's|^sync-uri[[:space:]]*=.*|sync-uri = rsync://rsync.us.gentoo.org/gentoo-portage|' /etc/portage/repos.conf/gentoo.conf; \
+    if grep -q '^sync-type[[:space:]]*=' /etc/portage/repos.conf/gentoo.conf; then \
+      sed -i 's|^sync-type[[:space:]]*=.*|sync-type = git|' /etc/portage/repos.conf/gentoo.conf; \
     else \
-      printf '\nsync-uri = rsync://rsync.us.gentoo.org/gentoo-portage\n' >> /etc/portage/repos.conf/gentoo.conf; \
+      printf '\nsync-type = git\n' >> /etc/portage/repos.conf/gentoo.conf; \
+    fi; \
+    if grep -q '^sync-uri[[:space:]]*=' /etc/portage/repos.conf/gentoo.conf; then \
+      sed -i 's|^sync-uri[[:space:]]*=.*|sync-uri = https://github.com/gentoo-mirror/gentoo.git|' /etc/portage/repos.conf/gentoo.conf; \
+    else \
+      printf '\nsync-uri = https://github.com/gentoo-mirror/gentoo.git\n' >> /etc/portage/repos.conf/gentoo.conf; \
     fi; \
     jobs="$(nproc)"; \
     if [[ "${jobs}" -lt 1 ]]; then jobs=1; fi; \
