@@ -31,7 +31,7 @@ ARG GENTOO_FFLAGS="-march=native -O2 -pipe"
 ARG GENTOO_RUSTFLAGS="-C target-cpu=native"
 ARG GENTOO_LDFLAGS="-Wl,-O1 -Wl,--as-needed"
 ARG GENTOO_LTO=""
-ARG ENABLE_GENTOO_GURU_COMPAT=0
+ARG ENABLE_GENTOO_GURU_COMPAT=1
 
 ENV FEATURES="parallel-fetch parallel-install splitdebug -news"
 
@@ -105,6 +105,7 @@ RUN set -eux; \
     emerge --oneshot app-shells/bash \
       app-arch/tar \
       dev-db/sqlite \
+      dev-db/sqlitebrowser \
       dev-libs/openssl \
       dev-vcs/git \
       media-libs/fontconfig \
