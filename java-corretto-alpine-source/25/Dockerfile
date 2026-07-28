@@ -25,6 +25,7 @@ ENV LANG=C.UTF-8
 ENV LANGUAGE=C.UTF-8
 
 RUN adduser -D -h /home/container container
+COPY ./entrypoint.sh /entrypoint.sh
 USER container
 WORKDIR /home/container
-CMD ["/bin/bash"]
+CMD ["/bin/bash", "/entrypoint.sh"]
