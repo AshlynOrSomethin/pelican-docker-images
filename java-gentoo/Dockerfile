@@ -78,9 +78,9 @@ RUN set -eux; \
       eselect repository enable guru; \
     fi; \
     emaint sync -r guru; \
-    if ! emerge --oneshot app-emulation/gcompat; then \
-      echo "app-emulation/gcompat ~amd64" > /etc/portage/package.accept_keywords/gcompat; \
-      emerge --oneshot app-emulation/gcompat::guru; \
+    if ! emerge --oneshot sys-libs/gcompat; then \
+      echo "sys-libs/gcompat ~amd64" > /etc/portage/package.accept_keywords/gcompat; \
+      emerge --oneshot sys-libs/gcompat::guru; \
     fi
 
 RUN set -eux; \
