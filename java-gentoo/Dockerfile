@@ -16,13 +16,13 @@ RUN set -eux; \
     mkdir -p /opt/java-export/java; \
     cp -a "${src_java}/." /opt/java-export/java/
 
-FROM gentoo/stage3:musl-llvm
+FROM gentoo/stage3
 
 LABEL author="AshlynOrSomethin" maintainer="admin@softwarenoob.com"
 LABEL org.opencontainers.image.source="https://github.com/AshlynOrSomethin/pelican-docker-images"
 LABEL org.opencontainers.image.licenses="MIT"
-LABEL org.opencontainers.image.base.name="gentoo/stage3:musl-llvm"
-LABEL org.opencontainers.image.base.stage3="https://distfiles.gentoo.org/releases/amd64/autobuilds/current-stage3-amd64-musl-llvm/"
+LABEL org.opencontainers.image.base.name="gentoo/stage3"
+LABEL org.opencontainers.image.base.stage3="https://distfiles.gentoo.org/releases/amd64/autobuilds/current-stage3-amd64/"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
