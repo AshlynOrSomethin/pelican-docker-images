@@ -31,6 +31,7 @@ ARG GENTOO_FFLAGS="-march=native -O2 -pipe"
 ARG GENTOO_RUSTFLAGS="-C target-cpu=native"
 ARG GENTOO_LDFLAGS="-Wl,-O1 -Wl,--as-needed"
 ARG GENTOO_LTO=""
+ARG ENABLE_GENTOO_GURU_COMPAT=0
 
 ENV FEATURES="parallel-fetch parallel-install splitdebug -news"
 
@@ -87,14 +88,18 @@ RUN set -eux; \
     emerge --sync
 
 RUN set -eux; \
-    if ! eselect repository list -i | grep -qE '^[[:space:]]*guru[[:space:]]'; then \
-      eselect repository enable guru; \
-    fi; \
-    emaint sync -r guru; \
-    mkdir -p /etc/portage/package.accept_keywords /etc/portage/package.unmask; \
-    printf '%s\n' 'sys-libs/libucontext ~amd64' 'sys-libs/gcompat::guru ~amd64' > /etc/portage/package.accept_keywords/guru-gcompat; \
-    printf '%s\n' 'sys-libs/libucontext' 'sys-libs/gcompat::guru' > /etc/portage/package.unmask/guru-gcompat; \
-    emerge --oneshot sys-libs/libucontext sys-libs/gcompat::guru
+    if [ "${ENABLE_GENTOO_GURU_COMPAT}" = "1" ]; then \
+      if ! eselect repository list -i | grep -qE '^[[:space:]]*guru[[:space:]]'; then \
+        eselect repository enable guru; \
+      fi; \
+      emaint sync -r guru; \
+      mkdir -p /etc/portage/package.accept_keywords /etc/portage/package.unmask; \
+      printf '%s\n' 'sys-libs/libucontext ~amd64' 'sys-libs/gcompat::guru ~amd64' > /etc/portage/package.accept_keywords/guru-gcompat; \
+      printf '%s\n' 'sys-libs/libucontext' 'sys-libs/gcompat::guru' > /etc/portage/package.unmask/guru-gcompat; \
+      emerge --oneshot sys-libs/libucontext sys-libs/gcompat::guru; \
+    else \
+      echo "Skipping Guru overlay gcompat/libucontext install because ENABLE_GENTOO_GURU_COMPAT=${ENABLE_GENTOO_GURU_COMPAT}"; \
+    fi
 
 RUN set -eux; \
     emerge --oneshot app-shells/bash \
