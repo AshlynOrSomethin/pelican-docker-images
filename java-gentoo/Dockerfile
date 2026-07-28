@@ -26,9 +26,9 @@ LABEL org.opencontainers.image.base.stage3="https://distfiles.gentoo.org/release
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-ARG GENTOO_CFLAGS="-O3 -pipe -flto=auto -fuse-linker-plugin -fno-plt -march=native -mtune=native"
-ARG GENTOO_CXXFLAGS="-O3 -pipe -flto=auto -fuse-linker-plugin -fno-plt -march=native -mtune=native"
-ARG GENTOO_LDFLAGS="-Wl,-O2 -Wl,--as-needed -Wl,--sort-common -flto=auto"
+ARG GENTOO_CFLAGS="-O2 -pipe"
+ARG GENTOO_CXXFLAGS="-O2 -pipe"
+ARG GENTOO_LDFLAGS="-Wl,-O1 -Wl,--as-needed"
 
 ENV FEATURES="parallel-fetch parallel-install splitdebug -news"
 
@@ -40,6 +40,7 @@ RUN set -eux; \
       cp /usr/share/portage/config/repos.conf /etc/portage/repos.conf/gentoo.conf; \
     fi; \
     jobs="$(nproc)"; \
+    if [[ "${jobs}" -gt 2 ]]; then jobs=2; fi; \
     if [[ "${jobs}" -lt 1 ]]; then jobs=1; fi; \
     cat > /etc/portage/make.conf <<EOF
 COMMON_FLAGS="${GENTOO_CFLAGS}"
