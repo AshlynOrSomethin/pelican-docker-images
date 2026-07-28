@@ -17,11 +17,13 @@ jobs:
   build_and_push:
     name: "java_gentoo_${{ matrix.variant }}"
     runs-on: [self-hosted, Linux, X64]
+    timeout-minutes: 180
     env:
       DOCKER_CLIENT_TIMEOUT: 120
       COMPOSE_HTTP_TIMEOUT: 120
     strategy:
       fail-fast: false
+      max-parallel: 1
       matrix:
         include:
           - variant: corretto
