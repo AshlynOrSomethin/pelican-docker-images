@@ -11,9 +11,10 @@ RUN set -eux; \
       java_bin="$(readlink -f "$(command -v java)")"; \
       src_java="$(dirname "$(dirname "${java_bin}")")"; \
     fi; \
+    src_java="$(readlink -f "${src_java}")"; \
     test -d "${src_java}"; \
-    mkdir -p /opt/java-export; \
-    cp -a "${src_java}" /opt/java-export/java
+    mkdir -p /opt/java-export/java; \
+    cp -a "${src_java}/." /opt/java-export/java/
 
 FROM gentoo/stage3:musl-llvm
 
