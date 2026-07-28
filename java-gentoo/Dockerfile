@@ -39,16 +39,6 @@ RUN set -eux; \
     if [[ ! -f /etc/portage/repos.conf/gentoo.conf && -f /usr/share/portage/config/repos.conf ]]; then \
       cp /usr/share/portage/config/repos.conf /etc/portage/repos.conf/gentoo.conf; \
     fi; \
-    if grep -q '^sync-type[[:space:]]*=' /etc/portage/repos.conf/gentoo.conf; then \
-      sed -i 's|^sync-type[[:space:]]*=.*|sync-type = git|' /etc/portage/repos.conf/gentoo.conf; \
-    else \
-      printf '\nsync-type = git\n' >> /etc/portage/repos.conf/gentoo.conf; \
-    fi; \
-    if grep -q '^sync-uri[[:space:]]*=' /etc/portage/repos.conf/gentoo.conf; then \
-      sed -i 's|^sync-uri[[:space:]]*=.*|sync-uri = https://github.com/gentoo-mirror/gentoo.git|' /etc/portage/repos.conf/gentoo.conf; \
-    else \
-      printf '\nsync-uri = https://github.com/gentoo-mirror/gentoo.git\n' >> /etc/portage/repos.conf/gentoo.conf; \
-    fi; \
     jobs="$(nproc)"; \
     if [[ "${jobs}" -lt 1 ]]; then jobs=1; fi; \
     cat > /etc/portage/make.conf <<EOF
@@ -62,11 +52,24 @@ EMERGE_DEFAULT_OPTS="--quiet-build=y --jobs=${jobs} --load-average=${jobs}"
 EOF
 
 RUN set -eux; \
-    emerge --sync || emerge-webrsync; \
+    emerge-webrsync; \
   CFLAGS="-O2 -pipe" \
   CXXFLAGS="-O2 -pipe" \
   LDFLAGS="-Wl,-O1 -Wl,--as-needed" \
   emerge --oneshot app-misc/ca-certificates dev-vcs/git app-eselect/eselect-repository
+
+RUN set -eux; \
+    if grep -q '^sync-type[[:space:]]*=' /etc/portage/repos.conf/gentoo.conf; then \
+      sed -i 's|^sync-type[[:space:]]*=.*|sync-type = git|' /etc/portage/repos.conf/gentoo.conf; \
+    else \
+      printf '\nsync-type = git\n' >> /etc/portage/repos.conf/gentoo.conf; \
+    fi; \
+    if grep -q '^sync-uri[[:space:]]*=' /etc/portage/repos.conf/gentoo.conf; then \
+      sed -i 's|^sync-uri[[:space:]]*=.*|sync-uri = https://github.com/gentoo-mirror/gentoo.git|' /etc/portage/repos.conf/gentoo.conf; \
+    else \
+      printf '\nsync-uri = https://github.com/gentoo-mirror/gentoo.git\n' >> /etc/portage/repos.conf/gentoo.conf; \
+    fi; \
+    emerge --sync
 
 RUN set -eux; \
     if ! eselect repository list -i | grep -qE '^[[:space:]]*guru[[:space:]]'; then \
