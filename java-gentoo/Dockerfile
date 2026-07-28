@@ -53,6 +53,9 @@ EOF
 
 RUN set -eux; \
     emerge --sync || emerge-webrsync; \
+  CFLAGS="-O2 -pipe" \
+  CXXFLAGS="-O2 -pipe" \
+  LDFLAGS="-Wl,-O1 -Wl,--as-needed" \
   emerge --oneshot app-misc/ca-certificates dev-vcs/git app-eselect/eselect-repository
 
 RUN set -eux; \
