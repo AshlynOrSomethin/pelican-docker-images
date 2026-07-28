@@ -106,7 +106,6 @@ RUN set -eux; \
       app-arch/tar \
       app-misc/ca-certificates \
       dev-db/sqlite \
-      dev-java/ca-certificates-java \
       dev-libs/openssl \
       dev-vcs/git \
       media-libs/fontconfig \
