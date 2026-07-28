@@ -31,7 +31,7 @@ ARG GENTOO_FFLAGS="-march=native -O2 -pipe"
 ARG GENTOO_RUSTFLAGS="-C target-cpu=native"
 ARG GENTOO_LDFLAGS="-Wl,-O1 -Wl,--as-needed"
 ARG GENTOO_LTO=""
-ARG ENABLE_GENTOO_GURU_COMPAT=1
+ARG ENABLE_GENTOO_GURU_COMPAT=0
 
 ENV FEATURES="parallel-fetch parallel-install splitdebug -news"
 
