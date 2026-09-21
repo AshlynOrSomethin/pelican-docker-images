@@ -1,6 +1,7 @@
 name: build nginx alpine with fancyindex
 
 on:
+  push:
   workflow_dispatch:
   schedule:
     - cron: "0 17 1,15 * *"

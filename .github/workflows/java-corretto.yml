@@ -1,6 +1,7 @@
 name: build java_corretto
 
 on:
+  push:
   workflow_dispatch:
   schedule:
     - cron: "0 17 1,15 * *" # bi-weekly on 1st and 15th calendar day at 17:00

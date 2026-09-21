@@ -1,5 +1,6 @@
 name: build java_zulu_alpine
 on:
+  push:
   workflow_dispatch:
   schedule:
     - cron: "0 17 1,15 * *" # bi-weekly on 1st and 15th calendar day at 17:00
