@@ -16,7 +16,7 @@ concurrency:
 jobs:
   push:
     name: "pterodactyl-images:java_${{ matrix.tag }}_zulu"
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: ubuntu-latest
     env:
       DOCKER_CLIENT_TIMEOUT: 120
       COMPOSE_HTTP_TIMEOUT: 120

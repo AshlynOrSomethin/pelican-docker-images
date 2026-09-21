@@ -27,5 +27,8 @@ ENV LANGUAGE=C.UTF-8
 RUN adduser -D -h /home/container container
 COPY ./entrypoint.sh /entrypoint.sh
 USER container
+ENV USER=container HOME=/home/container
+ENV PATH="/home/container/.local/bin:${PATH}"
+RUN export FRESH_NO_DESKTOP=1; curl -fsSL https://raw.githubusercontent.com/sinelaw/fresh/refs/heads/master/scripts/install.sh | sh
 WORKDIR /home/container
 CMD ["/bin/bash", "/entrypoint.sh"]
