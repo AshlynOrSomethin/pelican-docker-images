@@ -46,6 +46,8 @@ Navigate to `Admin Panel -> Egg -> Select your egg`. Add Docker image URL(s) fro
 
 ### Java Amazon Corretto (AMD64/ARM64)
 
+These non-Alpine images use Amazon Linux packages: `libstdc++` provides the C++ runtime, and `gcc`, `gcc-c++`, `make`, `automake`, and `libtool` provide the build tools (rather than Debian's `build-essential`).
+
 | Version | Image Tag |
 |---------|-----------|
 | Java 8 | `ghcr.io/ashlynorsomethin/pelican-images:java_8_corretto` |
