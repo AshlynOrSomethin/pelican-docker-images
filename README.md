@@ -55,6 +55,7 @@ These non-Alpine images use Amazon Linux packages: `libstdc++` provides the C++ 
 | Java 17 | `ghcr.io/ashlynorsomethin/pelican-images:java_17_corretto` |
 | Java 21 | `ghcr.io/ashlynorsomethin/pelican-images:java_21_corretto` |
 | Java 25 | `ghcr.io/ashlynorsomethin/pelican-images:java_25_corretto` |
+| Java 27 | `ghcr.io/ashlynorsomethin/pelican-images:java_27_corretto` |
 
 ### Java Amazon Corretto Alpine (AMD64/ARM64)
 
@@ -65,26 +66,51 @@ These non-Alpine images use Amazon Linux packages: `libstdc++` provides the C++ 
 | Java 17 | `ghcr.io/ashlynorsomethin/pelican-images:java_17_corretto_alpine` |
 | Java 21 | `ghcr.io/ashlynorsomethin/pelican-images:java_21_corretto_alpine` |
 | Java 25 | `ghcr.io/ashlynorsomethin/pelican-images:java_25_corretto_alpine` |
+| Java 27 | `ghcr.io/ashlynorsomethin/pelican-images:java_27_corretto_alpine` |
 
 ### Java Azul Zulu (AMD64/ARM64)
+
+Java 13 and 18 are AMD64-only. Within Java 12-28, versions 12, 14, and 16 are omitted because their upstream images lack headless tags; Java 28 is deferred until an upstream image is available. Standard images retain the JDK, while Alpine images use headless JREs. Java 27 uses the official `azul-zulu` image repository.
 
 | Version | Image Tag |
 |---------|-----------|
 | Java 8 | `ghcr.io/ashlynorsomethin/pelican-images:java_8_zulu` |
 | Java 11 | `ghcr.io/ashlynorsomethin/pelican-images:java_11_zulu` |
+| Java 13 (AMD64 only) | `ghcr.io/ashlynorsomethin/pelican-images:java_13_zulu` |
+| Java 15 | `ghcr.io/ashlynorsomethin/pelican-images:java_15_zulu` |
 | Java 17 | `ghcr.io/ashlynorsomethin/pelican-images:java_17_zulu` |
+| Java 18 (AMD64 only) | `ghcr.io/ashlynorsomethin/pelican-images:java_18_zulu` |
+| Java 19 | `ghcr.io/ashlynorsomethin/pelican-images:java_19_zulu` |
+| Java 20 | `ghcr.io/ashlynorsomethin/pelican-images:java_20_zulu` |
 | Java 21 (LTS) | `ghcr.io/ashlynorsomethin/pelican-images:java_21_zulu` |
+| Java 22 | `ghcr.io/ashlynorsomethin/pelican-images:java_22_zulu` |
+| Java 23 | `ghcr.io/ashlynorsomethin/pelican-images:java_23_zulu` |
+| Java 24 | `ghcr.io/ashlynorsomethin/pelican-images:java_24_zulu` |
 | Java 25 (LTS) | `ghcr.io/ashlynorsomethin/pelican-images:java_25_zulu` |
+| Java 26 | `ghcr.io/ashlynorsomethin/pelican-images:java_26_zulu` |
+| Java 27 | `ghcr.io/ashlynorsomethin/pelican-images:java_27_zulu` |
 
 ### Java Azul Zulu Alpine (AMD64/ARM64)
+
+Java 13 and 15 are AMD64-only. Versions 12, 14, and 16 have no upstream headless tags and are omitted; Java 28 is deferred until an upstream image is available.
 
 | Version | Image Tag |
 |---------|-----------|
 | Java 8 | `ghcr.io/ashlynorsomethin/pelican-images:java_8_zulu_alpine` |
 | Java 11 | `ghcr.io/ashlynorsomethin/pelican-images:java_11_zulu_alpine` |
+| Java 13 (AMD64 only) | `ghcr.io/ashlynorsomethin/pelican-images:java_13_zulu_alpine` |
+| Java 15 (AMD64 only) | `ghcr.io/ashlynorsomethin/pelican-images:java_15_zulu_alpine` |
 | Java 17 | `ghcr.io/ashlynorsomethin/pelican-images:java_17_zulu_alpine` |
+| Java 18 | `ghcr.io/ashlynorsomethin/pelican-images:java_18_zulu_alpine` |
+| Java 19 | `ghcr.io/ashlynorsomethin/pelican-images:java_19_zulu_alpine` |
+| Java 20 | `ghcr.io/ashlynorsomethin/pelican-images:java_20_zulu_alpine` |
 | Java 21 (LTS) | `ghcr.io/ashlynorsomethin/pelican-images:java_21_zulu_alpine` |
+| Java 22 | `ghcr.io/ashlynorsomethin/pelican-images:java_22_zulu_alpine` |
+| Java 23 | `ghcr.io/ashlynorsomethin/pelican-images:java_23_zulu_alpine` |
+| Java 24 | `ghcr.io/ashlynorsomethin/pelican-images:java_24_zulu_alpine` |
 | Java 25 (LTS) | `ghcr.io/ashlynorsomethin/pelican-images:java_25_zulu_alpine` |
+| Java 26 | `ghcr.io/ashlynorsomethin/pelican-images:java_26_zulu_alpine` |
+| Java 27 | `ghcr.io/ashlynorsomethin/pelican-images:java_27_zulu_alpine` |
 
 ---
 
