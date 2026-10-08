@@ -17,6 +17,7 @@ This fork is maintained by [**AshlynOrSomethin**](https://github.com/ashlynorsom
   - [☕ Java Eclipse Temurin Alpine (AMD64/ARM64)](#java-eclipse-temurin-alpine-amd64arm64)
   - [☕ Java BellSoft Liberica (AMD64/ARM64)](#java-bellsoft-liberica-amd64arm64)
   - [☕ Java BellSoft Liberica Alpine (AMD64/ARM64)](#java-bellsoft-liberica-alpine-amd64arm64)
+  - [☕ Java GraalVM Community (AMD64/ARM64)](#java-graalvm-community-amd64arm64)
   - [☕ Java Azul Zulu (AMD64/ARM64)](#java-azul-zulu-amd64arm64)
   - [☕ Java Azul Zulu (AMD64/ARM64)](#java-azul-zulu-alpine-amd64arm64)
 
@@ -45,6 +46,7 @@ Navigate to `Admin Panel -> Egg -> Select your egg`. Add Docker image URL(s) fro
 | [☕ Java Eclipse Temurin Alpine (AMD64/ARM64)](#java-eclipse-temurin-alpine-amd64arm64) | AMD64; ARM64 for Java 21-27 |
 | [☕ Java BellSoft Liberica (AMD64/ARM64)](#java-bellsoft-liberica-amd64arm64) | AMD64 / ARM64 |
 | [☕ Java BellSoft Liberica Alpine (AMD64/ARM64)](#java-bellsoft-liberica-alpine-amd64arm64) | AMD64 / ARM64 |
+| [☕ Java GraalVM Community (AMD64/ARM64)](#java-graalvm-community-amd64arm64) | AMD64 / ARM64 |
 | [☕ Java Azul Zulu (AMD64/ARM64)](#java-azul-zulu-amd64arm64)             | ![AMD64](https://img.shields.io/badge/AMD64-Supported-green) ![ARM64](https://img.shields.io/badge/ARM64-Supported-green) |
 | [☕ Java Azul Zulu Alpine (AMD64/ARM64)](#java-azul-zulu-alpine-amd64arm64)             | ![AMD64](https://img.shields.io/badge/AMD64-Supported-green) ![ARM64](https://img.shields.io/badge/ARM64-Supported-green) |
 
@@ -159,6 +161,22 @@ These images use BellSoft's musl-native Liberica JDK on Alpine (`bellsoft/liberi
 | Java 25 | `ghcr.io/ashlynorsomethin/pelican-images:java_25_liberica_alpine` |
 | Java 26 | `ghcr.io/ashlynorsomethin/pelican-images:java_26_liberica_alpine` |
 | Java 27 | `ghcr.io/ashlynorsomethin/pelican-images:java_27_liberica_alpine` |
+
+### Java GraalVM Community (AMD64/ARM64)
+
+These images use the official `ghcr.io/graalvm/graalvm-community:<version>` major-version tags on Oracle Linux. All listed versions support AMD64 and ARM64. They run server JARs normally on GraalVM's JVM; they do not compile Minecraft, mods, or plugins into native executables. Java 17 and 20-24 tags are older releases retained for compatibility; available tags do not imply ongoing security updates. Java 25 uses the plain `25` tag, not the separate `25i` release series or `latest`.
+
+The images include GCC/G++, Make, Python, Git, SQLite, network utilities, Fresh, and the `en_US.UTF-8` locale. Oracle Linux package names are used (`gcc-c++`, `bind-utils`, and `nmap-ncat`). Oracle's CodeReady Builder repository is enabled during package updates and installation to keep the upstream development libraries in sync. Oracle's EPEL repository is enabled using the matching `oracle-epel-release-el<major>` package to install `ffmpeg-free`, which provides `ffmpeg` and `ffprobe` with EPEL's limited codec selection rather than a full-codec FFmpeg build. There is no upstream Alpine variant.
+
+| Version | Image Tag |
+|---------|-----------|
+| Java 17 | `ghcr.io/ashlynorsomethin/pelican-images:java_17_graalvm` |
+| Java 20 | `ghcr.io/ashlynorsomethin/pelican-images:java_20_graalvm` |
+| Java 21 | `ghcr.io/ashlynorsomethin/pelican-images:java_21_graalvm` |
+| Java 22 | `ghcr.io/ashlynorsomethin/pelican-images:java_22_graalvm` |
+| Java 23 | `ghcr.io/ashlynorsomethin/pelican-images:java_23_graalvm` |
+| Java 24 | `ghcr.io/ashlynorsomethin/pelican-images:java_24_graalvm` |
+| Java 25 | `ghcr.io/ashlynorsomethin/pelican-images:java_25_graalvm` |
 
 ### Java Azul Zulu (AMD64/ARM64)
 
